@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+   <!--ModulePrefs title="__MSG_org.andnyb.jira.plugin.mfgg.title__" directory_title="__MSG_org.andnyb.jira.plugin.mfgg.title__"
+   description="__MSG_org.andnyb.jira.plugin.mfgg.description__"-->
+   <ModulePrefs
+      title="Multi Filter Chart.js"
+      directory_title="Multi Filter Chart.js Gadget"
+      description="Displays various graphs based on multiple filters."
+      thumbnail='#staticResourceUrl("org.andnyb.jira.plugin.multi-filter-chartjs:mfgg", "thumbnail.png")'>
+
+      <Require feature="dynamic-height" />
+      <Optional feature="auth-refresh"/>
+      <Require feature="oauthpopup" />
+      <Require feature="setprefs" />
+      <Require feature="settitle" />
+      <Require feature="views" />
+      <Optional feature="atlassian.util" />
+      <Optional feature="gadget-directory">
+         <Param name="categories">Other</Param>
+      </Optional>
+      #oauth
+      #supportedLocales("gadget.common,com.andnyb.jira.plugin.mfgg")
+      #supportLocales
+   </ModulePrefs>
+
+   <UserPref name="isConfigured" datatype="hidden" default_value="false" />
+   <UserPref name="gadgetTitleUserPref" datatype="hidden" default_value="Chart"/>
+   <UserPref name="barTypeUserPref" datatype="hidden" default_value="line"/>
+   <UserPref name="filterIdUserPref" datatype="hidden" required="true"/>
+   <UserPref name="graphLabelUserPref" datatype="hidden" default_value="Undefined"/>
+   <UserPref name="granularityUserPref" datatype="hidden" default_value="Monthly"/>
+   <UserPref name="categoryUserPref" datatype="hidden" default_value="Created"/>
+   <UserPref name="themeUserPref" datatype="hidden" default_value="Default"/>
+   <UserPref name="refresh" datatype="hidden" default_value="false" />
+
+   <Content type="html">
+      <![CDATA[
+      #requireResource("com.atlassian.jira.gadgets:common")
+      #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
+      #includeResources()
+
+      <style type="text/css">
+         #container {padding:10px;}
+         .view { padding: 0.5em 1em; }
+         .config-options {border-top:1px solid #bbb;clear:both;padding-top:.25em;}
+         .config-options span {font-size:0.9166em;padding-right:.5em;}
+         .config-options span.secondary {border-left:1px solid #eee;padding-left:.5em;}
+      </style>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+      <canvas id="chart" height="2" width="3"/>
+      <script>
+      var dataSet = {};
+      (function () {
+         var gadget = AJS.Gadget({
+            baseUrl: "__ATLASSIAN_BASE_URL__",
+            useOauth: "/rest/gadget/1.0/currentUser",
+            config: {
+               descriptor: function(args) {
+                  var canvas = document.getElementById('chart');
+                  var gadget = this;
+                  gadgets.window.setTitle("Multifilter Chart Configuration");
+                  return {
+                     theme : function () {
+                        if (gadgets.window.getViewportDimensions().width < 450) {
+                           return "gdt top-label";
+                        } else {
+                           return "gdt";
+                        }
+                     }(),
+                     action: "/rest/multifilter/1.0/validate",
+                     fields: [
+                        {
+                           userpref: "gadgetTitleUserPref",
+                           label: "Chart title:",
+                           description: "Enter the title to use on the Dashboard.",
+                           type: "text",
+                           value: gadget.getPref("gadgetTitleUserPref")
+                        },
+                        {
+                           userpref: "barTypeUserPref",
+                           label: "Chart type:",
+                           description: "Type of chart to display.",
+                           type: "select",
+                           selected: gadget.getPref("barTypeUserPref"),
+                           options:[
+                              {
+                                 label: "Bar",
+                                 value: "bar"
+                              },
+                              {
+                                 label: "Doughnut",
+                                 value: "doughnut"
+                              },
+                              {
+                                 label: "Horizontal Bar",
+                                 value: "horizontalBar"
+                              },
+                              {
+                                 label: "Line",
+                                 value: "line"
+                              },
+                              {
+                                 label: "Pie",
+                                 value: "pie"
+                              },
+                              {
+                                 label: "Stacked",
+                                 value: "stacked"
+                              }
+                           ]
+                        },
+                        {
+                           userpref: "granularityUserPref",
+                           label: "Time granularity:",
+                           description: "Grouping of issues, day,week,month,year.",
+                           type: "select",
+                           selected: gadget.getPref("granularityUserPref"),
+                           options:[
+                              {
+                                 label: "Monthly",
+                                 value:"month"
+                              },
+                              {
+                                 label: "Weekly",
+                                 value:"week"
+                              },
+                              {
+                                 label: "Yearly",
+                                 value:"year"
+                              }
+                           ]
+                        },
+                        {
+                           userpref: "categoryUserPref",
+                           label: "Category/group by:",
+                           description: "Based on what time-stamp shall the issues be grouped.",
+                           type: "select",
+                           selected: gadget.getPref("categoryUserPref"),
+                           options:[
+                              {
+                                 label: "Created",
+                                 value:"created"
+                              },
+                              {
+                                 label: "Updated",
+                                 value:"updated"
+                              },
+                              {
+                                 label: "Resolved",
+                                 value:"resolved"
+                              }
+                           ]
+                        },
+                        {
+                           userpref: "themeUserPref",
+                           label: "Graph theme:",
+                           description: "Predefined themes, line color and fill color.",
+                           type: "select",
+                           selected: gadget.getPref("themeUserPref"),
+                           options:[
+                              {
+                                 label: "Default",
+                                 value:"default"
+                              },
+                              {
+                                 label: "Solid bars",
+                                 value:"solid"
+                              },
+                              {
+                                 label: "Line/no-fill",
+                                 value:"empty"
+                              }
+                           ]
+                        },
+                        {
+                           id: "filterIdField",
+                           userpref: "filterIdUserPref",
+                           label: "Filter id:",
+                           required: "true",
+                           description: "Comma separated list of filter ids for the issues to display in the graph.",
+                           type: "number text",
+                           value: gadget.getPref("filterIdUserPref")
+                        },
+                        {
+                           userpref: "graphLabelUserPref",
+                           label: "Graph labels:",
+                           description: "Comma separated list of labels to use for the plotted graph.",
+                           type: "text",
+                           value: gadget.getPref("graphLabelUserPref")
+                        },
+								AJS.gadget.fields.nowConfigured()
+                     ]
+                  };
+               }, // -> descriptor
+               args: []
+            }, // -> config
+            view: {
+               enableReload: true,
+               onResizeAdjustHeight: true,
+               onResizeReload: true,
+               template: function(args) {
+
+                  var g = this;
+                  var optionsDef;
+                  if (g.getPref("barTypeUserPref")=="line" ||
+                      g.getPref("barTypeUserPref")=="bar") {
+                     optionsDef =
+                     {
+                        responsive: true,
+                        layout: {
+                           padding: {
+                              left: 25,
+                              right: 25,
+                              top: 0,
+                              bottom: 0
+                           }
+                        },
+                        scales: {
+                           yAxes: [
+                              {
+                                 ticks: {
+                                    beginAtZero: true
+                                 }
+                              }
+                           ]
+                        }
+                     };
+                  }
+                  else if (g.getPref("barTypeUserPref")=="doughnut" ||
+                           g.getPref("barTypeUserPref")=="pie") {
+                     optionsDef =
+                     {
+                        responsive: true,
+                        layout: {
+                           padding: {
+                              left: 25,
+                              right: 25,
+                              top: 0,
+                              bottom: 0
+                           }
+                        }
+                     };
+                  }
+                  else if (g.getPref("barTypeUserPref")=="horizontalBar") {
+                     optionsDef =
+                     {
+                        responsive: true,
+                        layout: {
+                           padding: {
+                              left: 25,
+                              right: 25,
+                              top: 0,
+                              bottom: 0
+                           }
+                        },
+                        scales: {
+                           xAxes: [
+                              {
+                                 ticks: {
+                                    beginAtZero: true
+                                 }
+                              }
+                           ]
+                        }
+                     };
+                  }
+                  else if (g.getPref("barTypeUserPref")=="stacked") {
+                     optionsDef =
+                     {
+                        responsive: true,
+                        layout: {
+                           padding: {
+                              left: 25,
+                              right: 25,
+                              top: 0,
+                              bottom: 0
+                           }
+                        },
+                        scales: {
+                           xAxes: [
+                              {
+                                 ticks: {
+                                    beginAtZero: true
+                                 },
+                                 stacked: true
+                              }
+                           ],
+                           yAxes: [
+                              {
+                                 stacked: true
+                              }
+                           ]
+                        }
+                     };
+
+                  }
+                  var barType = g.getPref("barTypeUserPref");
+                  if (barType=="stacked") {
+                     barType = "bar";
+                  }
+                  dataSet = args.data;
+                  gadgets.window.setTitle(gadget.getPref("gadgetTitleUserPref"));
+
+                  var ctx = document.getElementById('chart').getContext('2d');
+                  var myChart = new Chart(ctx, {
+                     type: barType,
+                     data: {
+                        labels: dataSet.labels,
+                        datasets: dataSet.datasets
+                     },
+                     options: optionsDef
+                  });
+                  //gadget.getFooter().append(
+                  //   AJS.$("<div/>").text("Used filters inkl links.");
+                  //);
+               },
+               args: [{
+                  key: "data",
+                  ajaxOptions: function() {
+                     return {
+                        contentType: "application/json",
+                        url: "/rest/multifilter/1.0/data"
+                           +"?filters="+encodeURIComponent(this.getPref("filterIdUserPref"))
+                           +"&labels="+encodeURIComponent(this.getPref("graphLabelUserPref"))
+                           +"&granularity="+this.getPref("granularityUserPref")
+                           +"&category="+this.getPref("categoryUserPref")
+                           +"&type="+this.getPref("barTypeUserPref")
+                           +"&theme="+this.getPref("themeUserPref")
+                     };
+                  }
+               }]
+            } // -> view
+         });
+         gadget.resize();
+         gadgets.window.adjustHeight();
+      })();
+      </script>
+      ]]>
+   </Content>
+</Module>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="Multi Filter Chart.js Gadget" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/plugin-icon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our web resources -->
+  <web-resource key="mfgg-resources" name="mfgg Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="mfgg.css" location="/css/mfgg.css"/>
+    <resource type="download" name="mfgg.js" location="/js/mfgg.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>mfgg</context>
+  </web-resource>
+  <gadget key="mfgg" location="mfgg-gadget.xml"/>
+  <resource type="i18n" name="mfgg" location="org.andnyb.jira.plugin.mfgg"/>
+  <resource type="download" name="thumbnail.png" location="images/chartjs-multifilter-thumb.png"/>
+  <rest name="Multi Filter Rest Resource" i18n-name-key="multi-filter-rest-resource.name" key="multi-filter-data-resource"
+        path="/multifilter" version="1.0">
+    <description key="multi-filter-rest-resource.description">JIRA/rest/multifilter/VERSION/data</description>
+  </rest>
+</atlassian-plugin>
