@@ -32,7 +32,7 @@
    <UserPref name="categoryUserPref" datatype="hidden" default_value="Created"/>
    <UserPref name="themeUserPref" datatype="hidden" default_value="Default"/>
    <UserPref name="refresh" datatype="hidden" default_value="false" />
-
+   
    <Content type="html">
       <![CDATA[
       #requireResource("com.atlassian.jira.gadgets:common")
@@ -311,9 +311,21 @@
                      },
                      options: optionsDef
                   });
-                  //gadget.getFooter().append(
-                  //   AJS.$("<div/>").text("Used filters inkl links.");
-                  //);
+
+                  // TODO, move out
+                  var filters = this.getPref("filterIdUserPref").split(",");
+                  var labels = this.getPref("graphLabelUserPref").split(",");
+                  var footer = "";
+                  for (i=0; i<filters.length; i++) {
+                     var label = "undefined";
+                     if (i<labels.length) {
+                        label = labels[i];
+                     }
+                     footer += "<b>Filter:</b> <a href=\""+"__ATLASSIAN_BASE_URL__"+"/issues/?filter="+filters[i]+"\">"+label+" ("+filters[i]+")</a><br>";
+                  }
+                  g.getView().append(
+                     AJS.$("<div/>"+footer)
+                  );
                },
                args: [{
                   key: "data",
