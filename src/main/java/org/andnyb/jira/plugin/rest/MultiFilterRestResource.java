@@ -34,15 +34,6 @@ public class MultiFilterRestResource {
       return Response.ok(new MultiFilterRestResourceModel().data(filterIds, labels, granularity, category, type, theme)).build();
    }
 
-   /*
-    http://localhost:2990/jira/rest/multifilter/1.0/validate
-    ?gadgetTitleUserPref=Chart
-    &barTypeUserPref=line
-    &filterIdUserPref=10003%2C10100
-    &graphLabelUserPref=Undefined+label&isConfigured=true
-    &refresh=false
-    &_=1505985015238
-   */
    @GET
    @Path("/validate")
    @AnonymousAllowed

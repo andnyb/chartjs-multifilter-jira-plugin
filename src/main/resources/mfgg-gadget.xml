@@ -32,7 +32,7 @@
    <UserPref name="categoryUserPref" datatype="hidden" default_value="Created"/>
    <UserPref name="themeUserPref" datatype="hidden" default_value="Default"/>
    <UserPref name="refresh" datatype="hidden" default_value="false" />
-   
+
    <Content type="html">
       <![CDATA[
       #requireResource("com.atlassian.jira.gadgets:common")
@@ -57,7 +57,7 @@
             useOauth: "/rest/gadget/1.0/currentUser",
             config: {
                descriptor: function(args) {
-                  var canvas = document.getElementById('chart');
+                  //document.getElementById('chart').style.visibility = "hidden";
                   var gadget = this;
                   gadgets.window.setTitle("Multifilter Chart Configuration");
                   return {
@@ -200,7 +200,6 @@
                onResizeAdjustHeight: true,
                onResizeReload: true,
                template: function(args) {
-
                   var g = this;
                   var optionsDef;
                   if (g.getPref("barTypeUserPref")=="line" ||
