@@ -6,7 +6,7 @@
     <version>${project.version}</version>
     <vendor name="${project.organization.name}" url="${project.organization.url}"/>
     <param name="plugin-icon">images/plugin-icon.png</param>
-    <param name="plugin-logo">images/pluginLogo.png</param>
+    <param name="plugin-logo">images/plugin-logo.png</param>
   </plugin-info>
   <!-- add our web resources -->
   <web-resource key="mfgg-resources" name="mfgg Web Resources">
