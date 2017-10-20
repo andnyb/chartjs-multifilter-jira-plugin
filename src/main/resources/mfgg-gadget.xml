@@ -6,7 +6,7 @@
       title="Multi Filter Chart.js"
       directory_title="Multi Filter Chart.js Gadget"
       description="Displays various graphs based on multiple filters."
-      thumbnail='#staticResourceUrl("org.andnyb.jira.plugin.multi-filter-chartjs:mfgg", "thumbnail.png")'>
+      thumbnail='#staticResourceUrl("org.andnyb.jira.plugin.chartjs-multi-filter:mfgg", "thumbnail.png")'>
 
       <Require feature="dynamic-height" />
       <Optional feature="auth-refresh"/>

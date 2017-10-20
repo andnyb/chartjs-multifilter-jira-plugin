@@ -3,13 +3,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.andnyb.jira.plugin</groupId>
-    <artifactId>multi-filter-chartjs</artifactId>
+    <artifactId>chartjs-multi-filter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <organization>
-        <!--url>http://x.y.z</url-->
+        <name>Andreas Nyberg</name>
+        <url>https://github.com/andnyb/chartjs-multifilter-jira-plugin</url>
     </organization>
     <name>mfgg</name>
-    <description>This is the Multi Filter Chart.js plugin for Atlassian JIRA.</description>
+    <description>Chart.js multi filter plugin for Atlassian JIRA.</description>
     <packaging>atlassian-plugin</packaging>
     <dependencies>
         <dependency>

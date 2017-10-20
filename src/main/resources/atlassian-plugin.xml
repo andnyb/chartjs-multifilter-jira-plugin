@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<atlassian-plugin key="${atlassian.plugin.key}" name="Multi Filter Chart.js Gadget" plugins-version="2">
+<atlassian-plugin key="${atlassian.plugin.key}" name="Chart.js multi filter JIRA plugin/gadget" plugins-version="2">
   <plugin-info>
     <description>${project.description}</description>
     <version>${project.version}</version>
