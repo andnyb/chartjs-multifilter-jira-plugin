@@ -83,7 +83,9 @@ public class DataSet {
    public void setColors(String line, String fill, String type) {
       if (type.equalsIgnoreCase("bar")
          || type.equalsIgnoreCase("stacked")
-         || type.equalsIgnoreCase("horizontalbar")) {
+         || type.equalsIgnoreCase("horizontalbar")
+         || type.equalsIgnoreCase("pie")
+         || type.equalsIgnoreCase("doughnut")) {
          for (int i = 0; i < data.size(); i++) {
             backgroundColor.add(fill);
             borderColor.add(line);
