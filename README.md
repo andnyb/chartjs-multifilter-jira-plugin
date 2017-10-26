@@ -1,7 +1,6 @@
 # Chart.JS Multi Filter JIRA Plugin
 JIRA Dashboard Gadget for rendering interactive Chart.JS based graphs including one or more JIRA search filters (multiple filters are not supported by JIRA as 
-per default).
- The gadget is highly configurable both in what to display/categorize as well as what kind of graph to display.
+per default). The gadget is highly configurable both in what to display/categorize as well as what kind of graph to display. ![alt text](https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/chartjs-multifilter-thumb.png "Thumbnail")
 
 ## Supported data and categorizations
 * Week / Month / Year
@@ -20,6 +19,9 @@ per default).
   * Pre defined themes
   
 ## Examples
+
+* Issue creation over time
+
 Displaying creation over time of issues in multiple projects and how they relate to each other is pretty straight forward, Define a JIRA search filter for 
 each of the project to include and select the granularity of the graph. The plugin will group the issues according to their created date (year/month/week) 
 and then render a chart with separated data for each project (search filter).  
