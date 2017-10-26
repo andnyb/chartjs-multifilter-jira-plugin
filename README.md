@@ -29,6 +29,10 @@ Displaying creation over time of issues in multiple projects and how they relate
 each of the project to include and select the granularity of the graph. The plugin will group the issues according to their created date (year/month/week) 
 and then render a chart with separated data for each project (search filter).  
 
+<p align="center"><img src="https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/screenshot-line.png" 
+alt="Line chart" 
+width="70%"/></p>
+
 ![alt text](https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/screenshot-line.png "Line graph")
 
 The same data can be displayed in different type charts, below is an example for a stacked bar chart. 
