@@ -23,7 +23,7 @@ width="400"/></p>
   
 ## Examples
 
-* Issue creation over time
+* Issue creation over time with for JIRA search filters
 
 Displaying creation over time of issues in multiple projects and how they relate to each other is pretty straight forward, Define a JIRA search filter for 
 each of the project to include and select the granularity of the graph. The plugin will group the issues according to their created date (year/month/week) 
