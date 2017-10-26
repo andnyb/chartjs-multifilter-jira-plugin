@@ -178,7 +178,7 @@
                            userpref: "filterIdUserPref",
                            label: "Filter id:",
                            required: "true",
-                           description: "Comma separated list of filter ids for the issues to display in the graph.",
+                           description: "Comma separated list of filter ids for the issues to display in the graph. Check the browser console log for errors when saving, configuration will not be saved if there are invalid filters.",
                            type: "number text",
                            value: gadget.getPref("filterIdUserPref")
                         },
