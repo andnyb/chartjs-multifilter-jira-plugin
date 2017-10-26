@@ -9,7 +9,7 @@
         <name>Andreas Nyberg</name>
         <url>https://github.com/andnyb/chartjs-multifilter-jira-plugin</url>
     </organization>
-    <name>mfgg</name>
+    <name>chartjs-multifilter-jira-plugin</name>
     <description>Chart.js multi filter plugin for Atlassian JIRA.</description>
     <packaging>atlassian-plugin</packaging>
     <dependencies>

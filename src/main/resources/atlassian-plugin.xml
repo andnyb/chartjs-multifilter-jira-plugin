@@ -9,15 +9,15 @@
     <param name="plugin-logo">images/plugin-logo.png</param>
   </plugin-info>
   <!-- add our web resources -->
-  <web-resource key="mfgg-resources" name="mfgg Web Resources">
+  <web-resource key="resources" name="Web Resources">
     <dependency>com.atlassian.auiplugin:ajs</dependency>
     <resource type="download" name="mfgg.css" location="/css/mfgg.css"/>
     <resource type="download" name="mfgg.js" location="/js/mfgg.js"/>
     <resource type="download" name="images/" location="/images"/>
     <context>mfgg</context>
   </web-resource>
-  <gadget key="mfgg" location="mfgg-gadget.xml"/>
-  <resource type="i18n" name="mfgg" location="org.andnyb.jira.plugin.mfgg"/>
+  <gadget key="chartjs-multi-filter" location="mfgg-gadget.xml"/>
+  <resource type="i18n" name="mfgg" location="org.andnyb.jira.plugin.chartjs-multi-filter"/>
   <resource type="download" name="thumbnail.png" location="images/chartjs-multifilter-thumb.png"/>
   <rest name="Multi Filter Rest Resource" i18n-name-key="multi-filter-rest-resource.name" key="multi-filter-data-resource"
         path="/multifilter" version="1.0">

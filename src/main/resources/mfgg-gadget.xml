@@ -5,8 +5,8 @@
    <ModulePrefs
       title="Multi Filter Chart.js"
       directory_title="Multi Filter Chart.js Gadget"
-      description="Displays various graphs based on multiple filters."
-      thumbnail='#staticResourceUrl("org.andnyb.jira.plugin.chartjs-multi-filter:mfgg", "thumbnail.png")'>
+      description="Include multiple filters in various Chart.js based and interactive charts."
+      thumbnail='#staticResourceUrl("org.andnyb.jira.plugin.chartjs-multi-filter:chartjs-multi-filter", "thumbnail.png")'>
 
       <Require feature="dynamic-height" />
       <Optional feature="auth-refresh"/>
@@ -19,7 +19,7 @@
          <Param name="categories">Other</Param>
       </Optional>
       #oauth
-      #supportedLocales("gadget.common,com.andnyb.jira.plugin.mfgg")
+      #supportedLocales("gadget.common,com.andnyb.jira.plugin.chartjs-multi-filter")
       #supportLocales
    </ModulePrefs>
 
@@ -49,6 +49,7 @@
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
       <canvas id="chart" height="2" width="3"/>
+      <!--script src="js/mfgg.js" type="text/javascript"></script-->
       <script>
       var dataSet = {};
       (function () {
@@ -176,20 +177,20 @@
                         {
                            id: "filterIdField",
                            userpref: "filterIdUserPref",
-                           label: "Filter id:",
+                           label: "Filter id(s):",
                            required: "true",
-                           description: "Comma separated list of filter ids for the issues to display in the graph. Check the browser console log for errors when saving, configuration will not be saved if there are invalid filters.",
+                           description: "Comma separated list of filter ids for the issues to display in the graph. Filter ids are present in the browser URL when selected on the issue search page. Check the browser console log for errors if it not possible to save, configuration will not be saved if there are invalid filters.",
                            type: "number text",
                            value: gadget.getPref("filterIdUserPref")
                         },
                         {
                            userpref: "graphLabelUserPref",
-                           label: "Graph labels:",
+                           label: "Graph label(s):",
                            description: "Comma separated list of labels to use for the plotted graph.",
                            type: "text",
                            value: gadget.getPref("graphLabelUserPref")
                         },
-								AJS.gadget.fields.nowConfigured()
+                        AJS.gadget.fields.nowConfigured()
                      ]
                   };
                }, // -> descriptor
@@ -203,95 +204,101 @@
                   var g = this;
                   var optionsDef;
                   if (g.getPref("barTypeUserPref")=="line" ||
-                      g.getPref("barTypeUserPref")=="bar") {
+                     g.getPref("barTypeUserPref")=="bar") {
                      optionsDef =
-                     {
-                        responsive: true,
-                        layout: {
-                           padding: {
-                              left: 25,
-                              right: 25,
-                              top: 0,
-                              bottom: 0
-                           }
-                        },
-                        scales: {
-                           yAxes: [
-                              {
-                                 ticks: {
-                                    beginAtZero: true
-                                 }
+                        {
+                           responsive: true,
+                           layout: {
+                              padding: {
+                                 left: 25,
+                                 right: 25,
+                                 top: 0,
+                                 bottom: 0
                               }
-                           ]
-                        }
-                     };
+                           },
+                           scales: {
+                              yAxes: [
+                                 {
+                                    ticks: {
+                                       beginAtZero: true
+                                    }
+                                 }
+                              ]
+                           },
+                           elements: {
+                              point: {
+                                 radius: 2,
+                                 hoverRadius: 3
+                              }
+                           }
+                        };
                   }
                   else if (g.getPref("barTypeUserPref")=="doughnut" ||
-                           g.getPref("barTypeUserPref")=="pie") {
+                     g.getPref("barTypeUserPref")=="pie") {
                      optionsDef =
-                     {
-                        responsive: true,
-                        layout: {
-                           padding: {
-                              left: 25,
-                              right: 25,
-                              top: 0,
-                              bottom: 0
+                        {
+                           responsive: true,
+                           layout: {
+                              padding: {
+                                 left: 25,
+                                 right: 25,
+                                 top: 0,
+                                 bottom: 0
+                              }
                            }
-                        }
-                     };
+                        };
                   }
                   else if (g.getPref("barTypeUserPref")=="horizontalBar") {
                      optionsDef =
-                     {
-                        responsive: true,
-                        layout: {
-                           padding: {
-                              left: 25,
-                              right: 25,
-                              top: 0,
-                              bottom: 0
-                           }
-                        },
-                        scales: {
-                           xAxes: [
-                              {
-                                 ticks: {
-                                    beginAtZero: true
-                                 }
+                        {
+                           responsive: true,
+                           layout: {
+                              padding: {
+                                 left: 25,
+                                 right: 25,
+                                 top: 0,
+                                 bottom: 0
                               }
-                           ]
-                        }
-                     };
+                           },
+                           scales: {
+                              xAxes: [
+                                 {
+                                    ticks: {
+                                       beginAtZero: true
+                                    }
+                                 }
+                              ]
+                           }
+                        };
                   }
                   else if (g.getPref("barTypeUserPref")=="stacked") {
                      optionsDef =
-                     {
-                        responsive: true,
-                        layout: {
-                           padding: {
-                              left: 25,
-                              right: 25,
-                              top: 0,
-                              bottom: 0
+                        {
+                           responsive: true,
+                           layout: {
+                              padding: {
+                                 left: 25,
+                                 right: 25,
+                                 top: 0,
+                                 bottom: 0
+                              }
+                           },
+                           scales: {
+                              xAxes: [
+                                 {
+                                    ticks: {
+                                       beginAtZero: true
+                                    },
+                                    stacked: true
+                                 }
+                              ],
+                              yAxes: [
+                                 {
+                                    stacked: true
+                                 }
+                              ]
                            }
-                        },
-                        scales: {
-                           xAxes: [
-                              {
-                                 ticks: {
-                                    beginAtZero: true
-                                 },
-                                 stacked: true
-                              }
-                           ],
-                           yAxes: [
-                              {
-                                 stacked: true
-                              }
-                           ]
-                        }
-                     };
+                        };
 
                   }
                   var barType = g.getPref("barTypeUserPref");
@@ -332,12 +339,12 @@
                      return {
                         contentType: "application/json",
                         url: "/rest/multifilter/1.0/data"
-                           +"?filters="+encodeURIComponent(this.getPref("filterIdUserPref"))
-                           +"&labels="+encodeURIComponent(this.getPref("graphLabelUserPref"))
-                           +"&granularity="+this.getPref("granularityUserPref")
-                           +"&category="+this.getPref("categoryUserPref")
-                           +"&type="+this.getPref("barTypeUserPref")
-                           +"&theme="+this.getPref("themeUserPref")
+                        +"?filters="+encodeURIComponent(this.getPref("filterIdUserPref"))
+                        +"&labels="+encodeURIComponent(this.getPref("graphLabelUserPref"))
+                        +"&granularity="+this.getPref("granularityUserPref")
+                        +"&category="+this.getPref("categoryUserPref")
+                        +"&type="+this.getPref("barTypeUserPref")
+                        +"&theme="+this.getPref("themeUserPref")
                      };
                   }
                }]
