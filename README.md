@@ -33,12 +33,11 @@ and then render a chart with separated data for each project (search filter).
 alt="Line chart" 
 width="70%"/></p>
 
-![alt text](https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/screenshot-line.png "Line graph")
-
 The same data can be displayed in different type charts, below is an example for a stacked bar chart. 
 
-![alt text](https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/screenshot-stackedbar.png "Stacked bar
-graph")
+<p align="center"><img src="https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/screenshot-stackedbar.png" 
+alt="Stacked bar chart" 
+width="70%"/></p>
 
 ## Development
 
