@@ -1,5 +1,7 @@
 # Chart.JS Multi Filter JIRA Plugin
-JIRA Dashboard Gadget for rendering interactive Chart.JS based graphs including one or more JIRA search filters (multiple filters are not supported by JIRA as per default). The gadget is highly configurable both in what to display/categorize as well as what kind of graph to display. <img src="https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/chartjs-multifilter-thumb.png" alt="thumbnail" width="200"/>
+JIRA Dashboard Gadget for rendering interactive Chart.JS based graphs including one or more JIRA search filters (multiple filters are not supported by JIRA as per default). The gadget is highly configurable both in what to display/categorize as well as what kind of graph to display. 
+
+<img src="https://github.com/andnyb/chartjs-multifilter-jira-plugin/raw/master/src/main/resources/images/chartjs-multifilter-thumb.png" alt="thumbnail" width="400"/>
 
 ## Supported data and categorizations
 * Week / Month / Year
