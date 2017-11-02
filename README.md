@@ -1,4 +1,5 @@
 # Chart.JS Multi Filter JIRA Plugin
+[![Build Status](https://travis-ci.org/andnyb/chartjs-multifilter-jira-plugin.svg)](https://travis-ci.org/andnyb/chartjs-multifilter-jira-plugin)
 
 **Developed and tested for:** *JIRA Server 7.5.X (will not work on 6.x JIRA versions)*
 
