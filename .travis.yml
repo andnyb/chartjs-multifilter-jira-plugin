@@ -5,4 +5,4 @@ before_install:
     # Install Atlassian SDK
     - sudo apt-get update
     - sudo apt-get install atlassian-plugin-sdk
-script: atlas-clean
+script: atlas-package
